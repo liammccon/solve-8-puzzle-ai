@@ -75,4 +75,24 @@ public class Puzzle {
         return board;
     }
 
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for (int row = 0; row < 3; row++){
+            for (int col = 0; col < 3; col++){
+                char c = (char) (board[row][col] + '0'); //Convert the digit to char
+                if (c == '0')
+                    c = 'b';
+                sb.append(c);
+            }
+            sb.append(' ');
+        }
+        return sb.toString().trim();
+    }
+
+    public class TestHook {
+        public int [][] getBoard(){
+            return Puzzle.this.board;
+        }
+    }
+
 }
