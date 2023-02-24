@@ -11,11 +11,11 @@ import java.util.Objects;
  * tile is in the upper left hand corner.</p>
  * <p>The solved board looks like this:</p>
  * <code>
- * - - - - - - - <br>
+ * ------------- <br>
  * | b | 1 | 2 | <br>
  * | 3 | 4 | 5 | <br>
  * | 6 | 7 | 8 | <br>
- * - - - - - - - <br>
+ * ------------- <br>
  * </code>
  */
 public class Puzzle {
@@ -62,6 +62,7 @@ public class Puzzle {
         return intArrayToBoard(stateAsInts);
     }
 
+    //Create a 2D 3x3 int array from the list of Integers
     private int[][] intArrayToBoard(List<Integer> stateAsInts) {
         assert(stateAsInts.size() == 9);
         int [][] board = new int[3][3];
@@ -75,6 +76,10 @@ public class Puzzle {
         return board;
     }
 
+    /**
+     * Creates a string representation of the current state in the format "b12 345 678"
+     * @return The string representation of the current state
+     */
     public String toString(){
         StringBuilder sb = new StringBuilder();
         for (int row = 0; row < 3; row++){
