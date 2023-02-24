@@ -1,13 +1,27 @@
 package test;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import puzzle.Puzzle;
 
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static puzzle.Direction.*;
 
 class PuzzleTest {
+    private Puzzle puzzleSolved;
+    private Puzzle.TestHook testHookSolved;
+    private Puzzle puzzle36728154b;
+    private Puzzle.TestHook testHook36728154b;
+
+    @BeforeEach
+    public void init(){
+        puzzleSolved = new Puzzle("b12 345 678");
+        testHookSolved = puzzleSolved.new TestHook();
+        puzzle36728154b = new Puzzle("367 281 54b");
+        testHook36728154b = puzzle36728154b.new TestHook();
+    }
 
     @Test
     public void testBuildValidPuzzle(){
@@ -36,5 +50,31 @@ class PuzzleTest {
         for(String s : invalidPuzzles) {
             assertThrows(Exception.class, ()-> new Puzzle(s));
         }
+    }
+
+    @Test
+    public void testGetBlankRowCol(){
+        int blankRow = testHook36728154b.getBlankRow();
+        int blankCol = testHook36728154b.getBlankCol();
+        assertEquals(blankRow, 2);
+        assertEquals(blankCol, 2);
+
+        int blankRow2 = testHookSolved.getBlankRow();
+        int blankCol2 = testHookSolved.getBlankCol();
+        assertEquals(blankRow2, 0);
+        assertEquals(blankCol2, 0);
+    }
+
+    @Test
+    public void testIsValidMove(){
+        assertTrue(puzzleSolved.isValidMove(DOWN));
+        assertTrue(puzzleSolved.isValidMove(RIGHT));
+        assertFalse(puzzleSolved.isValidMove(LEFT));
+        assertFalse(puzzleSolved.isValidMove(UP));
+
+        assertFalse(puzzle36728154b.isValidMove(DOWN));
+        assertFalse(puzzle36728154b.isValidMove(RIGHT));
+        assertTrue(puzzle36728154b.isValidMove(LEFT));
+        assertTrue(puzzle36728154b.isValidMove(UP));
     }
 }

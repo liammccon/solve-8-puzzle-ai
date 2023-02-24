@@ -113,10 +113,55 @@ public class Puzzle {
         return sb.toString().trim();
     }
 
+    /**
+     * Move the blank tile in the given direction
+     * @param direction the direction in which to move the blank tile
+     */
+    public void move(Direction direction) {
+
+    }
+
+    /**
+     * Returns whether or the blank tile can be moved in the given direction
+     * @param direction The direction to test for validity
+     * @return True if the direction is a valid move or false if not
+     */
+    public boolean isValidMove(Direction direction){
+        switch (direction) {
+            case UP -> {return blankRowCol().row() != 0; }
+            case DOWN -> {return blankRowCol().row() != 2;}
+            case LEFT -> {return blankRowCol().col() != 0;}
+            case RIGHT -> {return blankRowCol().col() != 2;}
+            default -> {return false;} //Should not have to run
+        }
+    }
+
+    /**
+     * Gets a {@link RowCol} record containing the row and column of the blank tile
+     * @return a {@link RowCol} record containing the row and column of the blank tile
+     */
+    private RowCol blankRowCol() {
+        for (int row = 0; row < 3; row++){
+            for (int col = 0; col < 3; col++){
+                if (board[row][col] == 0) return new RowCol(row, col);
+            }
+        }
+        throw new IllegalStateException("Board does not contain a blank tile or is not 3 x 3");
+    }
+
+    /**
+     * A record containing the row and column indexes for a tile
+     */
+    protected static record RowCol(int row, int col){}
+
     public class TestHook {
         public int [][] getBoard(){
             return Puzzle.this.board;
         }
+        public int getBlankRow() {return Puzzle.this.blankRowCol().row();}
+        public int getBlankCol() {return Puzzle.this.blankRowCol().col();}
+
     }
+
 
 }
