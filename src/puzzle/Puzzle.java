@@ -118,7 +118,25 @@ public class Puzzle {
      * @param direction the direction in which to move the blank tile
      */
     public void move(Direction direction) {
+        if (!isValidMove(direction)) {
+            throw new IllegalArgumentException("Unable to move " + direction.toString() + " on state [" + this + "]");
+        }
 
+        int blankRow = blankRowCol().row();
+        int blankCol = blankRowCol().col();
+
+        switch (direction) {
+            case UP -> swapTiles(blankRow, blankCol, blankRow - 1, blankCol);
+            case DOWN -> swapTiles(blankRow, blankCol, blankRow + 1, blankCol);
+            case LEFT -> swapTiles(blankRow, blankCol, blankRow, blankCol - 1);
+            case RIGHT -> swapTiles(blankRow, blankCol, blankRow, blankCol + 1);
+        }
+    }
+
+    private void swapTiles(int row1, int col1, int row2, int col2) {
+        int tempRowCol1 = board[row1][col1];
+        board[row1][col1] = board[row2][col2];
+        board[row2][col2] = tempRowCol1;
     }
 
     /**

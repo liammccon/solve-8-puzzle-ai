@@ -77,4 +77,15 @@ class PuzzleTest {
         assertTrue(puzzle36728154b.isValidMove(LEFT));
         assertTrue(puzzle36728154b.isValidMove(UP));
     }
+
+    @Test
+    public void testMove(){
+        puzzleSolved.move(RIGHT);
+        assertEquals(puzzleSolved.toString(), "1b2 345 678");
+
+        puzzleSolved.move(DOWN);
+        assertEquals(puzzleSolved.toString(), "142 3b5 678");
+
+        assertThrows(Exception.class, ()->puzzle36728154b.move(RIGHT));
+    }
 }
