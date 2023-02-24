@@ -23,7 +23,9 @@ public class Puzzle {
     /**
      * The 3 x 3 puzzle board. A '0' represents the blank tile.
      */
-    private int [][] board;
+    private final int [][] board;
+    private long maxNodes;
+    private final long DEFAULT_MAX_NODES = 500;
 
     /**
      * Constructor for the Puzzle. Sets the initial state of the board.
@@ -31,6 +33,15 @@ public class Puzzle {
      */
     public Puzzle(String initialState) {
         this.board = buildBoard(initialState);
+        this.maxNodes = DEFAULT_MAX_NODES;
+    }
+
+    /**
+     * Default constructor for Puzzle. Sets the initial position to the solved state, 'b12 345 678'
+     */
+    public Puzzle() {
+        this.board = buildBoard("b12 345 678");
+        this.maxNodes = DEFAULT_MAX_NODES;
     }
 
     /**
@@ -62,7 +73,7 @@ public class Puzzle {
         return intArrayToBoard(stateAsInts);
     }
 
-    //Create a 2D 3x3 int array from the list of Integers
+    /**Create a 2D 3x3 int array from the list of Integers */
     private int[][] intArrayToBoard(List<Integer> stateAsInts) {
         assert(stateAsInts.size() == 9);
         int [][] board = new int[3][3];
@@ -74,6 +85,14 @@ public class Puzzle {
             }
         }
         return board;
+    }
+
+    /**
+     * Set the maximum number of nodes the search methods are allowed to generate in one search
+     * @param maxNodes - the maximum number of nodes a search method can generate
+     */
+    public void setMaxNodes(long maxNodes){
+        this.maxNodes = maxNodes;
     }
 
     /**
