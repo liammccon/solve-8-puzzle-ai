@@ -165,6 +165,10 @@ public class Puzzle {
         return validDirections.get(randIndex);
     }
 
+    public void printState(){
+        System.out.println("Current puzzle state: " + this);
+    }
+
     /**
      * Returns whether or the blank tile can be moved in the given direction
      * @param direction The direction to test for validity
@@ -204,7 +208,6 @@ public class Puzzle {
         }
         public int getBlankRow() {return Puzzle.this.blankRowCol().row();}
         public int getBlankCol() {return Puzzle.this.blankRowCol().col();}
-
     }
 
 
