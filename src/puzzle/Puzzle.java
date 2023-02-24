@@ -1,8 +1,8 @@
 package puzzle;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
+import static puzzle.Direction.*;
 
 /**
  * Represents an 8-Puzzle and the actions it can perform
@@ -137,6 +137,32 @@ public class Puzzle {
         int tempRowCol1 = board[row1][col1];
         board[row1][col1] = board[row2][col2];
         board[row2][col2] = tempRowCol1;
+    }
+
+    /**
+     * Make n random moves from the current state
+     * @param n the number of random moves to make
+     */
+    public void randomizeState(int n){
+        assert (n > 0);
+
+        while (n > 0) {
+            move(getRandomValidDirection());
+            n--;
+        }
+    }
+
+    private Direction getRandomValidDirection(){
+        ArrayList<Direction> validDirections = new ArrayList<>();
+        //Add all valid directions
+        Arrays.stream(Direction.values()).forEach((direction -> {
+            if (isValidMove(direction)) validDirections.add(direction);
+        }));
+        assert(validDirections.size() >= 2);
+
+        Random rand = new Random();
+        int randIndex = rand.nextInt(validDirections.size());
+        return validDirections.get(randIndex);
     }
 
     /**

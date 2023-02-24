@@ -86,6 +86,18 @@ class PuzzleTest {
         puzzleSolved.move(DOWN);
         assertEquals(puzzleSolved.toString(), "142 3b5 678");
 
-        assertThrows(Exception.class, ()->puzzle36728154b.move(RIGHT));
+        assertThrows(Exception.class, ()-> puzzle36728154b.move(RIGHT));
+    }
+
+    @Test
+    public void testRandomizeState(){
+        System.out.println("State before random move " + puzzleSolved);
+        puzzleSolved.randomizeState(1);
+        System.out.println("State after 1 random move " + puzzleSolved);
+        puzzleSolved.randomizeState(1);
+        System.out.println("State after 1 more random move " + puzzleSolved);
+        puzzleSolved.randomizeState(100);
+        System.out.println("State after 100 random moves " + puzzleSolved);
+
     }
 }
