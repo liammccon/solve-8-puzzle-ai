@@ -43,6 +43,12 @@ class AStarSearchTest {
     @Test
     public void testSolveAStar(){
         Move solved = AStarSearch.solveAStar(new Puzzle(SOLVED), Heuristic.H2);
-        System.out.println(solved);
+        AStarSearch.printPath(solved);
+
+        Move solvedOneMove = AStarSearch.solveAStar(new Puzzle("1b2 345 678"), Heuristic.H2);
+        AStarSearch.printPath(solvedOneMove);
+
+        Move solvedHard = AStarSearch.solveAStar(new Puzzle(p381b14576), Heuristic.H2);
+        AStarSearch.printPath(solvedHard);
     }
 }

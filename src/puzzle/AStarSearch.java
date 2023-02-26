@@ -27,6 +27,22 @@ public class AStarSearch {
         return null;
     }
 
+    public static void printPath(Move move){
+        Stack<Move> stack = new Stack<>();
+        while(move.prev() != null){
+            stack.add(move);
+            move = move.prev();
+        }
+        int moveIndex = 0;
+        System.out.println("Starting state: " + move.newState());
+        while(!stack.isEmpty()){
+            move = stack.pop();
+            moveIndex++;
+            System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + move.newState());
+        }
+        System.out.println("Solved!");
+    }
+
     private static Move[] expand(Move move, Heuristic heuristic) {
         List<Direction> possibleDirections = Puzzle.getValidDirections(move.newState());
         List<Move> moves = new ArrayList<>();
