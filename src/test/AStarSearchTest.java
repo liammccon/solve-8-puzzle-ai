@@ -42,13 +42,15 @@ class AStarSearchTest {
 
     @Test
     public void testSolveAStar(){
-        Move solved = AStarSearch.solveAStar(new Puzzle(SOLVED), Heuristic.H2);
-        AStarSearch.printPath(solved);
+        long max_nodes = 100000;
+        Move solved = AStarSearch.solveAStar(new Puzzle(SOLVED), Heuristic.H1, max_nodes);
 
-        Move solvedOneMove = AStarSearch.solveAStar(new Puzzle("1b2 345 678"), Heuristic.H2);
-        AStarSearch.printPath(solvedOneMove);
+        Move solvedOneMove = AStarSearch.solveAStar(new Puzzle("1b2 345 678"), Heuristic.H1, max_nodes);
 
-        Move solvedHard = AStarSearch.solveAStar(new Puzzle(p381b14576), Heuristic.H2);
-        AStarSearch.printPath(solvedHard);
+
+        Move solvedHard = AStarSearch.solveAStar(new Puzzle(p381b14576), Heuristic.H2, max_nodes);
+
+
+        Move solvedMine = AStarSearch.solveAStar(new Puzzle("b56 312 784"), Heuristic.H1, max_nodes);
     }
 }
