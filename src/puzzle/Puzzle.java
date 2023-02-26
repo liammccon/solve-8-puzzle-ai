@@ -133,6 +133,18 @@ public class Puzzle {
         }
     }
 
+    /**
+     * Moves the blank tile in the given direction for the given board state
+     * @param direction the direction in which to move the blank tile
+     * @param state The given board state to move the tile.
+     * @return The state of the new board
+     */
+    public static String move(String state, Direction direction){
+        Puzzle puzzle = new Puzzle(state);
+        puzzle.move(direction);
+        return puzzle.toString();
+    }
+
     private void swapTiles(int row1, int col1, int row2, int col2) {
         int tempRowCol1 = board[row1][col1];
         board[row1][col1] = board[row2][col2];
@@ -153,6 +165,14 @@ public class Puzzle {
     }
 
     private Direction getRandomValidDirection(){
+        List<Direction> validDirections = getValidDirections();
+
+        Random rand = new Random();
+        int randIndex = rand.nextInt(validDirections.size());
+        return validDirections.get(randIndex);
+    }
+
+    private List<Direction> getValidDirections(){
         ArrayList<Direction> validDirections = new ArrayList<>();
         //Add all valid directions
         Arrays.stream(Direction.values()).forEach((direction -> {
@@ -160,9 +180,12 @@ public class Puzzle {
         }));
         assert(validDirections.size() >= 2);
 
-        Random rand = new Random();
-        int randIndex = rand.nextInt(validDirections.size());
-        return validDirections.get(randIndex);
+        return validDirections;
+    }
+
+    public static List<Direction> getValidDirections(String state){
+        Puzzle puzzle = new Puzzle(state);
+        return puzzle.getValidDirections();
     }
 
     public void printState(){
@@ -182,6 +205,17 @@ public class Puzzle {
             case RIGHT -> {return blankRowCol().col() != 2;}
             default -> {return false;} //Should not have to run
         }
+    }
+
+    /**
+     * Returns whether or the blank tile of the given puzzle state can be moved in the given direction
+     * @param state the puzzle state
+     * @param direction the direction to check for a move
+     * @return true if the direction is a valid move or false if not
+     */
+    public static boolean isValidMove(String state, Direction direction){
+        Puzzle p = new Puzzle(state);
+        return p.isValidMove(direction);
     }
 
     /**
