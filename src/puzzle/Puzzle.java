@@ -188,6 +188,10 @@ public class Puzzle {
         return puzzle.getValidDirections();
     }
 
+    public int [][] getBoard(){
+        return board;
+    }
+
     public void printState(){
         System.out.println("Current puzzle state: " + this);
     }
