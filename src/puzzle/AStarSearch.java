@@ -1,14 +1,52 @@
 package puzzle;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AStarSearch {
 
+    private static final String SOLVED = "b12 345 678";
+
+
     public static Move solveAStar(Puzzle puzzle, Heuristic heuristic) {
         Move move = makeInitialMove(puzzle, heuristic);
-        return move;
+        PriorityQueue<Move> frontier = new PriorityQueue<Move>();
+        frontier.add(move);
+        Hashtable<String, Integer> reachedCost = new Hashtable<>();
+        reachedCost.put(move.newState(), move.cost());
+        while (!frontier.isEmpty()){
+            move = frontier.poll();
+            if (move.newState().equals(SOLVED)) return move;
+            for (Move next: expand(move, heuristic)){
+                //if (next.state is not in reached OR next.cost is less than the cost for the equivalent state in the table
+                if (!reachedCost.containsKey(next.newState()) || next.cost() < reachedCost.get(next.newState())){
+                    frontier.add(next);
+                    reachedCost.put(next.newState(), next.cost());
+                }
+            }
+        }
+        return null;
     }
+
+    private static Move[] expand(Move move, Heuristic heuristic) {
+        List<Direction> possibleDirections = Puzzle.getValidDirections(move.newState());
+        List<Move> moves = new ArrayList<>();
+        possibleDirections.forEach(direction -> {
+            String nextState = Puzzle.move(move.newState(), direction);
+            int newDistFromStart = move.distFromStart() + 1;
+            Move nextMove = new Move (
+                    direction,
+                    move,
+                    newDistFromStart,
+                    calculateHeuristic(nextState, heuristic),
+                    nextState
+            );
+            moves.add(nextMove);
+        });
+        Move [] moveArray = new Move[moves.size()];
+        moves.toArray(moveArray);
+        return moveArray;
+    }
+
 
     private static Move makeInitialMove(Puzzle puzzle, Heuristic heuristic) {
         String state = puzzle.toString();
@@ -76,7 +114,8 @@ public class AStarSearch {
         for (char c: state.toCharArray()){
             if(c >= '0' && c <='8'){
                 int digit = c - '0';
-                if(digit != index) heuristic ++;
+                //H1 does not count the blank tile's misplacement
+                if(c != '0' && digit != index) heuristic ++;
                 index ++;
             }
         }
