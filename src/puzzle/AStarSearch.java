@@ -29,7 +29,7 @@ public class AStarSearch {
         int cost = 0; //heuristic
         for (int row = 0; row < 3; row ++){
             for (int col=0; col < 3; col++){
-                cost += tileScoreH1(board, row, col);
+                cost += tileScoreH2(board, row, col);
             }
         }
         return cost;
@@ -59,7 +59,7 @@ public class AStarSearch {
     /**
      * Gets the heuristic value for a single tile in the board
      */
-    private static int tileScoreH1(int[][] board, int row, int col) {
+    private static int tileScoreH2(int[][] board, int row, int col) {
         int tile = board[row][col];
         int goalRow = goalCoordinate.get(tile).row();
         int goalCol = goalCoordinate.get(tile).col();
@@ -72,14 +72,19 @@ public class AStarSearch {
     private static int calculateH1(String state){
         int index = 0;
         int heuristic = 0;
+        state = state.replace('b','0');
         for (char c: state.toCharArray()){
-            if(c=='b') c = 0;
             if(c >= '0' && c <='8'){
-                int digit = c + '0';
+                int digit = c - '0';
                 if(digit != index) heuristic ++;
                 index ++;
             }
         }
         return heuristic;
+    }
+
+    public class TestHook {
+        public static int calculateHeuristic(String state, Heuristic heuristic) { return AStarSearch.calculateHeuristic(state, heuristic);}
+        public static int tileScoreH1(int[][] board, int row, int col) { return AStarSearch.tileScoreH2(board, row, col); }
     }
 }
