@@ -11,24 +11,32 @@ public class LocalBeamSearch {
 
     public static Move solveLocalBeam(Puzzle puzzle, long max_nodes, int k) {
         int generatedNodes = 0;
-        Move firstMove = makeInitialMove(puzzle);
+        Move move = makeInitialMove(puzzle);
         PriorityQueue<Move> nextMoves = new PriorityQueue<>();
-        nextMoves.add(firstMove);
-        for(Move move: nextMoves) {
-            //Check for going over the max allowed generated nodes
-            generatedNodes++;
-            if (generatedNodes > max_nodes) throw new IllegalStateException("Exceeded maximum allowed number of generated nodes! (" + generatedNodes + ")");
+        nextMoves.add(move);
+        while (true) {
 
-            if (move.state().equals(Puzzle.SOLVED)){
-                //Solution found!
-                Move.printSolution(move, generatedNodes, heuristic, "Local Beam Search");
-                return move;
+            PriorityQueue<Move> currentMoves = new PriorityQueue<>(nextMoves);
+            nextMoves.clear();
+
+            //generate next states for all K current states
+            for (Move m : currentMoves){
+                //Check for going over the max allowed generated nodes
+                generatedNodes++;
+                if (generatedNodes > max_nodes) throw new IllegalStateException("Exceeded maximum allowed number of generated nodes! (" + generatedNodes + ")");
+
+                if (m.state().equals(Puzzle.SOLVED)){
+                    //Solution found!
+                    Move.printSolution(m, generatedNodes, heuristic, "Local Beam Search");
+                    return m;
+                }
+
+                nextMoves.addAll(expand(m));
             }
 
-            nextMoves.addAll(expand(move));
+            nextMoves.addAll(currentMoves);
             nextMoves = removePastK(nextMoves, k);
         }
-        return null;
     }
 
     private static Collection<Move> expand(Move move) {
@@ -36,10 +44,11 @@ public class LocalBeamSearch {
         List<Move> moves = new ArrayList<>();
         possibleDirections.forEach(direction -> {
             String nextState = Puzzle.move(move.state(), direction);
+            int distFromStart = move.distFromStart() + 1;
             Move nextMove = new Move (
                     direction,
                     move,
-                    0,
+                    distFromStart,
                     Heuristic.calculateHeuristic(nextState, heuristic),
                     nextState
             );
@@ -50,10 +59,14 @@ public class LocalBeamSearch {
 
     private static PriorityQueue<Move> removePastK(PriorityQueue<Move> nextMoves, int k) {
         PriorityQueue<Move> newQ = new PriorityQueue<>();
-        while (newQ.size() < k){
-            newQ.add(nextMoves.remove());
+        if (nextMoves.size() > k){
+            while (newQ.size() < k){
+                newQ.add(nextMoves.remove());
+            }
+            return newQ;
+        } else {
+            return nextMoves;
         }
-        return newQ;
     }
 
 
