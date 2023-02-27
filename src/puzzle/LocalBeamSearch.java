@@ -14,6 +14,8 @@ public class LocalBeamSearch {
         Move move = makeInitialMove(puzzle);
         PriorityQueue<Move> nextMoves = new PriorityQueue<>();
         nextMoves.add(move);
+
+        boolean firstTime = true; //TODO DELETE
         while (true) {
 
             PriorityQueue<Move> currentMoves = new PriorityQueue<>(nextMoves);
@@ -23,7 +25,10 @@ public class LocalBeamSearch {
             for (Move m : currentMoves){
                 //Check for going over the max allowed generated nodes
                 generatedNodes++;
-                if (generatedNodes > max_nodes) throw new IllegalStateException("Exceeded maximum allowed number of generated nodes! (" + generatedNodes + ")");
+                if (generatedNodes > max_nodes) {
+                    System.out.println("Failed at cost " + currentMoves.remove().cost()); //todo delete
+                    throw new IllegalStateException("Exceeded maximum allowed number of generated nodes! (" + generatedNodes + ")");
+                }
 
                 if (m.state().equals(Puzzle.SOLVED)){
                     //Solution found!
@@ -36,6 +41,12 @@ public class LocalBeamSearch {
 
             nextMoves.addAll(currentMoves);
             nextMoves = removePastK(nextMoves, k);
+
+            //TODO DELETE
+            if (firstTime && nextMoves.size() == k) {
+                System.out.println("Q filled at " + generatedNodes);
+                firstTime = false;
+            }
         }
     }
 
