@@ -18,7 +18,7 @@ public class AStarSearch {
             move = frontier.poll();
             if (move.state().equals(SOLVED)){
                 //Solution!
-                printPath(move, nodesGenerated, heuristic);
+                Move.printSolution(move, nodesGenerated, heuristic);
                 return move;
             }
             for (Move next: expand(move, heuristic)){
@@ -32,22 +32,6 @@ public class AStarSearch {
             }
         }
         return null;
-    }
-
-    public static void printPath(Move move, long generatedNodes, Heuristic heuristic){
-        Stack<Move> stack = new Stack<>();
-        while(move.prev() != null){
-            stack.add(move);
-            move = move.prev();
-        }
-        int moveIndex = 0;
-        System.out.println("Starting state: " + move.state());
-        while(!stack.isEmpty()){
-            move = stack.pop();
-            moveIndex++;
-            System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + move.state());
-        }
-        System.out.println("Solved using heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated!\n");
     }
 
     private static Move[] expand(Move move, Heuristic heuristic) {

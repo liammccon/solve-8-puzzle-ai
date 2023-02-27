@@ -1,5 +1,7 @@
 package puzzle;
 
+import java.util.Stack;
+
 /**
  * Represents a move of the blank tile in one direction, resulting in the new board state.
  * @param direction the direction in which to move the blank tile. Will be null for the initial move.
@@ -9,6 +11,7 @@ package puzzle;
  * @param state the resulting state of the board after this move is completed
  */
 public record Move (Direction direction, Move prev, int distFromStart, int heuristic, String state) implements Comparable<Move> {
+
     /**
      * Returns the cost, f(n) = g(n) + h(n)
      * @return the cost, f(n) = g(n) + h(n)
@@ -19,5 +22,20 @@ public record Move (Direction direction, Move prev, int distFromStart, int heuri
         return cost() - other.cost();
     }
 
+    public static void printSolution(Move move, long generatedNodes, Heuristic heuristic){
+        Stack<Move> stack = new Stack<>();
+        while(move.prev() != null){
+            stack.add(move);
+            move = move.prev();
+        }
+        int moveIndex = 0;
+        System.out.println("Starting state: " + move.state());
+        while(!stack.isEmpty()){
+            move = stack.pop();
+            moveIndex++;
+            System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + move.state());
+        }
+        System.out.println("Solved using heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated!\n");
+    }
 
 }

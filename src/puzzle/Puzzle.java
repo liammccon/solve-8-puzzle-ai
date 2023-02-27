@@ -26,6 +26,7 @@ public class Puzzle {
     private final int [][] board;
     private long maxNodes;
     private final long DEFAULT_MAX_NODES = 500;
+    public static final String SOLVED = "b12 345 678";
 
     /**
      * Constructor for the Puzzle. Sets the initial state of the board.
