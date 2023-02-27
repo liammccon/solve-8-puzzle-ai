@@ -22,7 +22,7 @@ public record Move (Direction direction, Move prev, int distFromStart, int heuri
         return cost() - other.cost();
     }
 
-    public static void printSolution(Move move, long generatedNodes, Heuristic heuristic){
+    public static void printSolution(Move move, long generatedNodes, Heuristic heuristic, String searchAlgorithm){
         Stack<Move> stack = new Stack<>();
         while(move.prev() != null){
             stack.add(move);
@@ -35,7 +35,7 @@ public record Move (Direction direction, Move prev, int distFromStart, int heuri
             moveIndex++;
             System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + move.state());
         }
-        System.out.println("Solved using heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated!\n");
+        System.out.println("Solved using " + searchAlgorithm + " with heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated!\n");
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 
 public class LocalBeamSearch {
 
-    private static final Heuristic heuristic = Heuristic.H1;
+    private static final Heuristic heuristic = Heuristic.H2;
 
     public static Move solveLocalBeam(Puzzle puzzle, long max_nodes, int k) {
         int generatedNodes = 0;
@@ -21,7 +21,7 @@ public class LocalBeamSearch {
 
             if (move.state().equals(Puzzle.SOLVED)){
                 //Solution found!
-                Move.printSolution(move, generatedNodes, heuristic);
+                Move.printSolution(move, generatedNodes, heuristic, "Local Beam Search");
                 return move;
             }
 
