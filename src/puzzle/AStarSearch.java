@@ -13,10 +13,10 @@ public class AStarSearch {
         PriorityQueue<Move> frontier = new PriorityQueue<Move>();
         frontier.add(move);
         Hashtable<String, Integer> reachedCost = new Hashtable<>();
-        reachedCost.put(move.newState(), move.cost());
+        reachedCost.put(move.state(), move.cost());
         while (!frontier.isEmpty()){
             move = frontier.poll();
-            if (move.newState().equals(SOLVED)){
+            if (move.state().equals(SOLVED)){
                 //Solution!
                 printPath(move, nodesGenerated, heuristic);
                 return move;
@@ -25,9 +25,9 @@ public class AStarSearch {
                 nodesGenerated++;
                 if (nodesGenerated > max_nodes) throw new IllegalStateException("Exceeded maximum allowed number of generated nodes! (" + nodesGenerated + ")");
                 //if (next.state is not in reached OR next.cost is less than the cost for the equivalent state in the table
-                if (!reachedCost.containsKey(next.newState()) || next.cost() < reachedCost.get(next.newState())){
+                if (!reachedCost.containsKey(next.state()) || next.cost() < reachedCost.get(next.state())){
                     frontier.add(next);
-                    reachedCost.put(next.newState(), next.cost());
+                    reachedCost.put(next.state(), next.cost());
                 }
             }
         }
@@ -41,20 +41,20 @@ public class AStarSearch {
             move = move.prev();
         }
         int moveIndex = 0;
-        System.out.println("Starting state: " + move.newState());
+        System.out.println("Starting state: " + move.state());
         while(!stack.isEmpty()){
             move = stack.pop();
             moveIndex++;
-            System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + move.newState());
+            System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + move.state());
         }
         System.out.println("Solved using heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated!\n");
     }
 
     private static Move[] expand(Move move, Heuristic heuristic) {
-        List<Direction> possibleDirections = Puzzle.getValidDirections(move.newState());
+        List<Direction> possibleDirections = Puzzle.getValidDirections(move.state());
         List<Move> moves = new ArrayList<>();
         possibleDirections.forEach(direction -> {
-            String nextState = Puzzle.move(move.newState(), direction);
+            String nextState = Puzzle.move(move.state(), direction);
             int newDistFromStart = move.distFromStart() + 1;
             Move nextMove = new Move (
                     direction,

@@ -6,9 +6,9 @@ package puzzle;
  * @param prev the previous move in the current sequence, going back to the start. Will be null for the initial move.
  * @param distFromStart represents g(n), the number of moves taken since the first move in this sequence. Starts as 0
  * @param heuristic represents h(n), the heuristic
- * @param newState the state of the board after this move
+ * @param state the resulting state of the board after this move is completed
  */
-public record Move (Direction direction, Move prev, int distFromStart, int heuristic, String newState) implements Comparable<Move> {
+public record Move (Direction direction, Move prev, int distFromStart, int heuristic, String state) implements Comparable<Move> {
     /**
      * Returns the cost, f(n) = g(n) + h(n)
      * @return the cost, f(n) = g(n) + h(n)
