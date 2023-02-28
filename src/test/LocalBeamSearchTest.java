@@ -6,6 +6,10 @@ import puzzle.LocalBeamSearch;
 import puzzle.Move;
 import puzzle.Puzzle;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static puzzle.Puzzle.SOLVED;
 
@@ -35,6 +39,9 @@ class LocalBeamSearchTest {
             }
         }
 
+
     }
+
+
 
 }

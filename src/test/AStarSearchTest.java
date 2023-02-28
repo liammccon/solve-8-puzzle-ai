@@ -43,7 +43,7 @@ class AStarSearchTest {
     @Test
     public void testSolveAStar(){
         long max_nodes = 100000;
-        Move solved = AStarSearch.solveAStar(new Puzzle(SOLVED), Heuristic.H1, max_nodes);
+        Move solved = AStarSearch.solveAStar(new Puzzle(SOLVED), Heuristic.H1);
 
         Move solvedOneMove = AStarSearch.solveAStar(new Puzzle("1b2 345 678"), Heuristic.H1, max_nodes);
 

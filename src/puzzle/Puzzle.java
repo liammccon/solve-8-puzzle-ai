@@ -23,7 +23,7 @@ public class Puzzle {
     /**
      * The 3 x 3 puzzle board. A '0' represents the blank tile.
      */
-    private final int [][] board;
+    private int [][] board;
     private long maxNodes;
     private final long DEFAULT_MAX_NODES = 500;
     public static final String SOLVED = "b12 345 678";
@@ -86,6 +86,10 @@ public class Puzzle {
             }
         }
         return board;
+    }
+
+    public void setState(String state){
+        this.board = buildBoard("b12 345 678");
     }
 
     /**
@@ -253,6 +257,10 @@ public class Puzzle {
             }
         }
         throw new IllegalStateException("Board does not contain a blank tile or is not 3 x 3");
+    }
+
+    public long getMaxNodes() {
+        return maxNodes;
     }
 
     /**

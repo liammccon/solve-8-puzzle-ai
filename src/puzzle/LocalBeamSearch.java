@@ -15,7 +15,6 @@ public class LocalBeamSearch {
         PriorityQueue<Move> nextMoves = new PriorityQueue<>();
         nextMoves.add(move);
 
-        boolean firstTime = true; //TODO DELETE
         while (true) {
 
             PriorityQueue<Move> currentMoves = new PriorityQueue<>(nextMoves);
@@ -43,12 +42,6 @@ public class LocalBeamSearch {
             //select best K from the generated states AND current states and discard all el
             nextMoves.addAll(currentMoves);
             nextMoves = removePastK(nextMoves, k);
-
-            //TODO DELETE
-            if (firstTime && nextMoves.size() == k) {
-                System.out.println("Q filled at " + generatedNodes);
-                firstTime = false;
-            }
         }
     }
 
