@@ -36,9 +36,11 @@ public class LocalBeamSearch {
                     return m;
                 }
 
+                //Generate the states
                 nextMoves.addAll(expand(m));
             }
 
+            //select best K from the generated states AND current states and discard all el
             nextMoves.addAll(currentMoves);
             nextMoves = removePastK(nextMoves, k);
 

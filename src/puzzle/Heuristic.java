@@ -27,7 +27,7 @@ public enum Heuristic {
 
     private static Coordinate rowCol(int r, int c) {return new Coordinate(r, c);}
 
-    static int calculateHeuristic(String state, Heuristic heuristic) {
+    public static int calculateHeuristic(String state, Heuristic heuristic) {
         if(heuristic == H1) return calculateH1(state);
         if (heuristic == H2) return calculateH2(state);
         else throw new IllegalArgumentException("Uknown Heuristic given: " + heuristic);

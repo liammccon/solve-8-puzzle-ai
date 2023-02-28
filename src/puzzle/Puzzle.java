@@ -164,11 +164,30 @@ public class Puzzle {
             n--;
         }
     }
+    /**
+     * Make n random moves from the current state with a seed
+     * @param n the number of random moves to make
+     */
+    public void randomizeState(int n, int seed){
+        assert (n > 0);
+
+        while (n > 0) {
+            move(getRandomValidDirection());
+            n--;
+        }
+    }
 
     private Direction getRandomValidDirection(){
         List<Direction> validDirections = getValidDirections();
 
         Random rand = new Random();
+        int randIndex = rand.nextInt(validDirections.size());
+        return validDirections.get(randIndex);
+    }
+    private Direction getRandomValidDirection(int seed){
+        List<Direction> validDirections = getValidDirections();
+
+        Random rand = new Random(seed);
         int randIndex = rand.nextInt(validDirections.size());
         return validDirections.get(randIndex);
     }
