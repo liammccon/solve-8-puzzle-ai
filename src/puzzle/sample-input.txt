@@ -8,6 +8,7 @@ printState
 maxNodes 100000
 
 #Solve A* with H1 and H2 on the same starting state 500 moves out
+#Starting with A* using H1
 solveAStar h1
 
 #Randomize the solved puzzle by the same amount (resulting in the same state) then run A* with H2

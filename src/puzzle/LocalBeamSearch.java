@@ -25,7 +25,7 @@ public class LocalBeamSearch {
                 //Check for going over the max allowed generated nodes
                 generatedNodes++;
                 if (generatedNodes > max_nodes) {
-                    System.out.print("Failed at cost " + currentMoves.remove().cost() + ".");
+                    System.out.print("Failed at cost " + currentMoves.remove().cost() + ". ");
                     throw new IllegalStateException("Exceeded maximum allowed number of generated nodes (" + generatedNodes + ")");
                 }
 
