@@ -38,7 +38,10 @@ public record Move (Direction direction, Move prev, int distFromStart, int heuri
             moveIndex++;
             System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + puzzle);
         }
-        System.out.println("Solved using " + searchAlgorithm + " with heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated!");
+        System.out.println("Solved using " + searchAlgorithm + " with heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated.");
     }
 
+    public String toString(){
+        return "Move[cost="+cost()+", direction="+direction+", state="+state+", h(n)="+heuristic+", g(n)="+distFromStart;
+    }
 }

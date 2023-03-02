@@ -72,6 +72,42 @@ public class AStarSearch {
     }
 
 
+    /**
+     * Used for experiments. No print statements.
+     */
+    public static Move solveAStarNoPrint(Puzzle puzzle, Heuristic heuristic) {
+        long nodesGenerated = 1;
+        Move move = makeInitialMove(puzzle, heuristic);
+        PriorityQueue<Move> frontier = new PriorityQueue<Move>();
+        frontier.add(move);
+        Hashtable<String, Integer> reachedCost = new Hashtable<>();
+        reachedCost.put(move.state(), move.cost());
+
+        long maxNodes = puzzle.getMaxNodes();
+
+        while (!frontier.isEmpty()){
+            move = frontier.poll();
+            if (move.state().equals(SOLVED)){
+                //Solution!
+                //Move.runAndPrintSolution(puzzle, move, nodesGenerated, heuristic, "A Star Search");
+                return move;
+            }
+            for (Move next: expand(move, heuristic)){
+                nodesGenerated++;
+                if (nodesGenerated > maxNodes) {
+                    //throw new IllegalStateException("Exceeded maximum allowed number of generated nodes! (" + nodesGenerated + ")");
+                    return null; //Needed for Experiment 3
+                }
+                //if (next.state is not in reached OR next.cost is less than the cost for the equivalent state in the table
+                if (!reachedCost.containsKey(next.state()) || next.cost() < reachedCost.get(next.state())){
+                    frontier.add(next);
+                    reachedCost.put(next.state(), next.cost());
+                }
+            }
+        }
+        return null;
+    }
+
 
     public class TestHook {
         public static int calculateHeuristic(String state, Heuristic heuristic) { return Heuristic.calculateHeuristic(state, heuristic);}

@@ -111,7 +111,7 @@ public class Main {
             return;
         }
         System.out.println("Solving puzzle " + puzzle + " with AStarSearch and " + puzzle.getMaxNodes() + " allowed nodes.");
-        AStarSearch.solveAStar(puzzle, h);
+        Move solved = AStarSearch.solveAStar(puzzle, h);
     }
 
     private static void solveBeam(Puzzle puzzle, String stringK) {

@@ -50,7 +50,7 @@ public class LocalBeamSearch {
         List<Move> moves = new ArrayList<>();
         possibleDirections.forEach(direction -> {
             String nextState = Puzzle.move(move.state(), direction);
-            int distFromStart = move.distFromStart() + 1;
+            int distFromStart = 0;
             Move nextMove = new Move (
                     direction,
                     move,
@@ -81,5 +81,44 @@ public class LocalBeamSearch {
         String state = puzzle.toString();
         int calculatedHeuristic = Heuristic.calculateHeuristic(state, heuristic);
         return new Move(null, null, 0, calculatedHeuristic, state);
+    }
+
+    /**
+     * Used for Experiments! No print statements
+     */
+    public static Move solveLocalBeamNoPrint(Puzzle puzzle, long max_nodes, int k) {
+        int generatedNodes = 0;
+        Move move = makeInitialMove(puzzle);
+        PriorityQueue<Move> nextMoves = new PriorityQueue<>();
+        nextMoves.add(move);
+
+        while (true) {
+
+            PriorityQueue<Move> currentMoves = new PriorityQueue<>(nextMoves);
+            nextMoves.clear();
+
+            //generate next states for all K current states
+            for (Move m : currentMoves){
+                //Check for going over the max allowed generated nodes
+                generatedNodes++;
+                if (generatedNodes > max_nodes) {
+                    //System.out.print("Failed at cost " + currentMoves.remove().cost() + ". ");
+                    //throw new IllegalStateException("Exceeded maximum allowed number of generated nodes (" + generatedNodes + ")");
+                    return null; //Needed for experiment 3                }
+                }
+                if (m.state().equals(Puzzle.SOLVED)){
+                    //Solution found!
+                    //Move.runAndPrintSolution(puzzle, m, generatedNodes, heuristic, "Local Beam Search");
+                    return m;
+                }
+
+                //Generate the states
+                nextMoves.addAll(expand(m));
+            }
+
+            //select best K from the generated states AND current states and discard all el
+            nextMoves.addAll(currentMoves);
+            nextMoves = removePastK(nextMoves, k);
+        }
     }
 }

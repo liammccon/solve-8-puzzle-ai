@@ -1,0 +1,112 @@
+#Part 1 - simple starting state "312 645 7b8" for all three algorithms
+#Solve state "312 645 7b8" for all three algorithms
+Solving puzzle 312 645 7b8 with AStarSearch and 1000 allowed nodes.
+Starting state: 312 645 7b8
+Move 1: LEFT. State: 312 645 b78
+Move 2: UP. State: 312 b45 678
+Move 3: UP. State: b12 345 678
+Solved using A Star Search with heuristic 'H1' with 9 nodes generated.
+
+Solving puzzle 312 645 7b8 with AStarSearch and 1000 allowed nodes.
+Starting state: 312 645 7b8
+Move 1: LEFT. State: 312 645 b78
+Move 2: UP. State: 312 b45 678
+Move 3: UP. State: b12 345 678
+Solved using A Star Search with heuristic 'H2' with 9 nodes generated.
+
+Solving puzzle 312 645 7b8 with Local Beam Search using k = 100 and 1000 allowed nodes.
+Starting state: 312 645 7b8
+Move 1: LEFT. State: 312 645 b78
+Move 2: UP. State: 312 b45 678
+Move 3: UP. State: b12 345 678
+Solved using Local Beam Search with heuristic 'H2' with 21 nodes generated.
+#For this simple starting state, all three algorithms solved it the same way.
+
+#Part 2 - fully random starting state for A* with both heuristics
+#Fully randomize state with 500 moves
+#Solve A* with H1 and H2 on the same starting state 500 moves out, starting with A* using H1
+Solving puzzle 561 832 74b with AStarSearch and 100000 allowed nodes.
+Starting state: 561 832 74b
+Move 1: LEFT. State: 561 832 7b4
+Move 2: LEFT. State: 561 832 b74
+Move 3: UP. State: 561 b32 874
+Move 4: UP. State: b61 532 874
+Move 5: RIGHT. State: 6b1 532 874
+Move 6: DOWN. State: 631 5b2 874
+Move 7: LEFT. State: 631 b52 874
+Move 8: DOWN. State: 631 852 b74
+Move 9: RIGHT. State: 631 852 7b4
+Move 10: UP. State: 631 8b2 754
+Move 11: LEFT. State: 631 b82 754
+Move 12: UP. State: b31 682 754
+Move 13: RIGHT. State: 3b1 682 754
+Move 14: RIGHT. State: 31b 682 754
+Move 15: DOWN. State: 312 68b 754
+Move 16: DOWN. State: 312 684 75b
+Move 17: LEFT. State: 312 684 7b5
+Move 18: UP. State: 312 6b4 785
+Move 19: RIGHT. State: 312 64b 785
+Move 20: DOWN. State: 312 645 78b
+Move 21: LEFT. State: 312 645 7b8
+Move 22: LEFT. State: 312 645 b78
+Move 23: UP. State: 312 b45 678
+Move 24: UP. State: b12 345 678
+Solved using A Star Search with heuristic 'H1' with 44000 nodes generated.
+
+#Randomize the solved puzzle by the same amount then run A* with H2
+Current puzzle state: 561 832 74b
+Solving puzzle 561 832 74b with AStarSearch and 100000 allowed nodes.
+Starting state: 561 832 74b
+Move 1: UP. State: 561 83b 742
+Move 2: LEFT. State: 561 8b3 742
+Move 3: LEFT. State: 561 b83 742
+Move 4: DOWN. State: 561 783 b42
+Move 5: RIGHT. State: 561 783 4b2
+Move 6: UP. State: 561 7b3 482
+Move 7: RIGHT. State: 561 73b 482
+Move 8: DOWN. State: 561 732 48b
+Move 9: LEFT. State: 561 732 4b8
+Move 10: LEFT. State: 561 732 b48
+Move 11: UP. State: 561 b32 748
+Move 12: RIGHT. State: 561 3b2 748
+Move 13: UP. State: 5b1 362 748
+Move 14: LEFT. State: b51 362 748
+Move 15: DOWN. State: 351 b62 748
+Move 16: RIGHT. State: 351 6b2 748
+Move 17: UP. State: 3b1 652 748
+Move 18: RIGHT. State: 31b 652 748
+Move 19: DOWN. State: 312 65b 748
+Move 20: LEFT. State: 312 6b5 748
+Move 21: DOWN. State: 312 645 7b8
+Move 22: LEFT. State: 312 645 b78
+Move 23: UP. State: 312 b45 678
+Move 24: UP. State: b12 345 678
+Solved using A Star Search with heuristic 'H2' with 4896 nodes generated.
+#Both succeed with 24 moves. H1 generates 44000 nodes, H2 generates 4896 nodes
+
+#Part 3 - Solve Local beam search with starting with a simple state and increasing number of random moves.
+#Randomize the state by only 100 moves for Beam search
+Solving puzzle b51 342 678 with Local Beam Search using k = 1000 and 100000 allowed nodes.
+Starting state: b51 342 678
+Move 1: DOWN. State: 351 b42 678
+Move 2: RIGHT. State: 351 4b2 678
+Move 3: UP. State: 3b1 452 678
+Move 4: RIGHT. State: 31b 452 678
+Move 5: DOWN. State: 312 45b 678
+Move 6: LEFT. State: 312 4b5 678
+Move 7: LEFT. State: 312 b45 678
+Move 8: UP. State: b12 345 678
+Solved using Local Beam Search with heuristic 'H2' with 3409 nodes generated.
+#Succeeds with 8 steps for the (easier) starting state of b51 342 678
+
+#Randomize the state a little more (by 150 moves) for Beam search
+Solving puzzle 512 348 b67 with Local Beam Search using k = 10000 and 100000 allowed nodes.
+Failed at cost 8. Local Beam exceeded maximum allowed nodes.
+#Fails and ends with the best state having a heuristic cost of 8.
+
+#Try again and increase the max nodes and K value of beam search by ten times
+Solving puzzle 512 348 b67 with Local Beam Search using k = 10000 and 1000000 allowed nodes.
+Failed at cost 8. Local Beam exceeded maximum allowed nodes.
+#Fails with the best state again having a heuristic cost of 8. This means it got stuck in Local Minima
+
+Process finished with exit code 0

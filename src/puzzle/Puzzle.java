@@ -25,7 +25,7 @@ public class Puzzle {
      */
     private int [][] board;
     private long maxNodes;
-    private final long DEFAULT_MAX_NODES = 500;
+    private final long DEFAULT_MAX_NODES = 1000;
     public static final String SOLVED = "b12 345 678";
     private static final int SEED = 1;
     private Random seededRand;
@@ -47,6 +47,16 @@ public class Puzzle {
         this.board = buildBoard("b12 345 678");
         this.maxNodes = DEFAULT_MAX_NODES;
         this.seededRand = new Random(SEED);
+    }
+
+    /**
+     * Constructor for Puzzle with a set seed
+     * @param seed
+     */
+    public Puzzle(int seed){
+        this.board = buildBoard("b12 345 678");
+        this.maxNodes = DEFAULT_MAX_NODES;
+        this.seededRand = new Random(seed);
     }
 
     /**
@@ -93,7 +103,7 @@ public class Puzzle {
     }
 
     public void setState(String state){
-        this.board = buildBoard("b12 345 678");
+        this.board = buildBoard(state);
     }
 
     /**
@@ -174,12 +184,30 @@ public class Puzzle {
         }
     }
 
+    public void randomizeStateNoSeed(int n){
+        assert (n > 0);
+
+        while (n > 0) {
+            move(getRandomValidDirectionNoSeed());
+            n--;
+        }
+    }
+
     private Direction getRandomValidDirection(){
         List<Direction> validDirections = getValidDirections();
 
         int randIndex = seededRand.nextInt(validDirections.size());
         return validDirections.get(randIndex);
     }
+
+    private Direction getRandomValidDirectionNoSeed(){
+        List<Direction> validDirections = getValidDirections();
+
+        Random rand = new Random();
+        int randIndex = rand.nextInt(validDirections.size());
+        return validDirections.get(randIndex);
+    }
+
 
     public void resetSeed(){
         seededRand = new Random(SEED);

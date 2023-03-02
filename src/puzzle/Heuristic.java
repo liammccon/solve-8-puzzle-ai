@@ -49,6 +49,8 @@ public enum Heuristic {
      */
     static int tileScoreH2(int[][] board, int row, int col) {
         int tile = board[row][col];
+        //Do not count the blank tile
+        if (tile == 0) return 0;
         int goalRow = goalCoordinate.get(tile).row();
         int goalCol = goalCoordinate.get(tile).col();
         int score = 0;
