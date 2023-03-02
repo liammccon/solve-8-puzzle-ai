@@ -1,0 +1,35 @@
+#Start with the solved puzzle
+setState b12 345 678
+printState
+
+#Fully randomize it with 500 moves
+randomizeState 500
+printState
+maxNodes 100000
+
+#Solve A* with H1 and H2 on the same starting state 500 moves out
+solveAStar h1
+
+#Randomize the solved puzzle by the same amount (resulting in the same state) then run A* with H2
+randomizeState 500
+printState
+solveAStar h2
+#Both succeed with 24 moves. H1 generates 44000 nodes, H2 generates 4896 nodes
+
+#Randomize the state by only 100 moves for Beam search
+randomizeState 100
+maxNodes 100000
+solveBeam 1000
+#Succeeds with 8 steps for the (easier) starting state of b51 342 678
+
+#Randomize the state a little more (by 150 moves) for Beam search
+randomizeState 150
+solveBeam 10000
+#Fails and ends with the best state having a heuristic cost of 8.
+
+#Try again and increase the max nodes and K value of beam search by ten times
+setState b12 345 678
+randomizeState 150
+maxNodes 1000000
+solveBeam 10000
+#Fails with the best state again having a heuristic cost of 8. This means it got stuck in Local Minima
