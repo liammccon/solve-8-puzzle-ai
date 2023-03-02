@@ -21,7 +21,7 @@ public class AStarSearch {
             move = frontier.poll();
             if (move.state().equals(SOLVED)){
                 //Solution!
-                Move.printSolution(move, nodesGenerated, heuristic, "A Star Search");
+                Move.runAndPrintSolution(puzzle, move, nodesGenerated, heuristic, "A Star Search");
                 return move;
             }
             for (Move next: expand(move, heuristic)){

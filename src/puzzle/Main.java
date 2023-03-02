@@ -8,9 +8,7 @@ import java.util.Scanner;
 import java.util.function.BiConsumer;
 
 public class Main {
-
     public static void main(String[] args) {
-
         String fileName;
         if (args.length == 0) {
             System.out.println("Please specify a file to read from (absolute path)");
@@ -27,6 +25,16 @@ public class Main {
 
             while (scan.hasNext()){
                 line = scan.nextLine();
+                //Print empty lines
+                if (line.length() == 0) {
+                    System.out.println();
+                    continue;
+                }
+                //Print comments to the terminal
+                if (line.charAt(0) == '#') {
+                    System.out.println(line);
+                    continue;
+                }
                 String method = line.split(" ")[0];
                 if (runMethodWithArg.containsKey(method)){
 
@@ -38,7 +46,7 @@ public class Main {
 
                     runMethodWithArg.get(method).accept(puzzle, parameter);
                 } else {
-                    System.out.println("Argument " + method + " not recognized!");
+                    System.out.println("Argument " + method + " not recognized.");
                 }
             }
         } catch (FileNotFoundException e) {
@@ -57,14 +65,13 @@ public class Main {
         runMethodWithArg.put("solveAStar", Main::solveAStar);
         runMethodWithArg.put("solveBeam", Main::solveBeam);
 
-
     }
 
     private static void setState(Puzzle puzzle, String state) {
         try {
             puzzle.setState(state);
         } catch(Exception e) {
-            System.out.println("Error with setting state [ " + state + "]! State will stay as: " + puzzle + ". Error message: ");
+            System.out.println("Error with setting state [ " + state + "]. State will stay as: " + puzzle + ". Error message: ");
             System.out.println(e.getMessage() + "\n");
         }
     }
@@ -72,6 +79,7 @@ public class Main {
     private static void randomizeState(Puzzle puzzle, String stringNumber) {
         try {
             int n = Integer.parseInt(stringNumber);
+            puzzle.resetSeed();
             puzzle.randomizeState(n);
         } catch (Exception e){
             System.out.println("Error in randomizeState. Could not parse integer from " + stringNumber + ". State remains: " + puzzle);
@@ -115,8 +123,7 @@ public class Main {
         } catch (NumberFormatException e){
             System.out.println("Error in method maxNodes. Could not parse integer from " + stringK);
         } catch (IllegalStateException e) {
-            System.out.println("Local Beam exceeded maximum allowed nodes! It may have gotten stuck in local minima or ran just ran out of allowed before finishing." +
-                    "\nNext time, try a higher maxNodes or k value, or reduce the amount of randomized moves");
+            System.out.println("Local Beam exceeded maximum allowed nodes.");
         }
     }
 

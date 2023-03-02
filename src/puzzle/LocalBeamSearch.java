@@ -25,13 +25,13 @@ public class LocalBeamSearch {
                 //Check for going over the max allowed generated nodes
                 generatedNodes++;
                 if (generatedNodes > max_nodes) {
-                    System.out.println("Failed at cost " + currentMoves.remove().cost()); //todo delete
-                    throw new IllegalStateException("Exceeded maximum allowed number of generated nodes! (" + generatedNodes + ")");
+                    System.out.print("Failed at cost " + currentMoves.remove().cost() + ".");
+                    throw new IllegalStateException("Exceeded maximum allowed number of generated nodes (" + generatedNodes + ")");
                 }
 
                 if (m.state().equals(Puzzle.SOLVED)){
                     //Solution found!
-                    Move.printSolution(m, generatedNodes, heuristic, "Local Beam Search");
+                    Move.runAndPrintSolution(puzzle, m, generatedNodes, heuristic, "Local Beam Search");
                     return m;
                 }
 

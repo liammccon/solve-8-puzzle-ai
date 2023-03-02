@@ -22,20 +22,23 @@ public record Move (Direction direction, Move prev, int distFromStart, int heuri
         return cost() - other.cost();
     }
 
-    public static void printSolution(Move move, long generatedNodes, Heuristic heuristic, String searchAlgorithm){
+    /** Runs the solution path on the given puzzle and prints the steps taken
+     */
+    public static void runAndPrintSolution(Puzzle puzzle, Move move, long generatedNodes, Heuristic heuristic, String searchAlgorithm){
         Stack<Move> stack = new Stack<>();
         while(move.prev() != null){
             stack.add(move);
             move = move.prev();
         }
         int moveIndex = 0;
-        System.out.println("Starting state: " + move.state());
+        System.out.println("Starting state: " + puzzle);
         while(!stack.isEmpty()){
             move = stack.pop();
+            puzzle.move(move.direction);
             moveIndex++;
-            System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + move.state());
+            System.out.println("Move " + moveIndex + ": " + move.direction() + ". State: " + puzzle);
         }
-        System.out.println("Solved using " + searchAlgorithm + " with heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated!\n");
+        System.out.println("Solved using " + searchAlgorithm + " with heuristic '"+heuristic+"' with " + generatedNodes + " nodes generated!");
     }
 
 }

@@ -24,7 +24,7 @@ class LocalBeamSearchTest {
             String state = SOLVED;
             Puzzle p = new Puzzle();
             for (int i = 1; i <= round; i++){
-                p.randomizeState(i, 0);
+                p.randomizeState(i);
             }
             System.out.println("Attempting Local Beam Search with " + round + " random moves from start. K = " + k + ", Max = " + maxNodes + ", State = " + p);
             try {

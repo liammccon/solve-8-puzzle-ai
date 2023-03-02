@@ -27,6 +27,8 @@ public class Puzzle {
     private long maxNodes;
     private final long DEFAULT_MAX_NODES = 500;
     public static final String SOLVED = "b12 345 678";
+    private static final int SEED = 1;
+    private Random seededRand;
 
     /**
      * Constructor for the Puzzle. Sets the initial state of the board.
@@ -35,6 +37,7 @@ public class Puzzle {
     public Puzzle(String initialState) {
         this.board = buildBoard(initialState);
         this.maxNodes = DEFAULT_MAX_NODES;
+        this.seededRand = new Random(SEED);
     }
 
     /**
@@ -43,6 +46,7 @@ public class Puzzle {
     public Puzzle() {
         this.board = buildBoard("b12 345 678");
         this.maxNodes = DEFAULT_MAX_NODES;
+        this.seededRand = new Random(SEED);
     }
 
     /**
@@ -156,23 +160,12 @@ public class Puzzle {
         board[row2][col2] = tempRowCol1;
     }
 
-    /**
-     * Make n random moves from the current state
-     * @param n the number of random moves to make
-     */
-    public void randomizeState(int n){
-        assert (n > 0);
 
-        while (n > 0) {
-            move(getRandomValidDirection());
-            n--;
-        }
-    }
     /**
      * Make n random moves from the current state with a seed
      * @param n the number of random moves to make
      */
-    public void randomizeState(int n, int seed){
+    public void randomizeState(int n){
         assert (n > 0);
 
         while (n > 0) {
@@ -184,16 +177,12 @@ public class Puzzle {
     private Direction getRandomValidDirection(){
         List<Direction> validDirections = getValidDirections();
 
-        Random rand = new Random();
-        int randIndex = rand.nextInt(validDirections.size());
+        int randIndex = seededRand.nextInt(validDirections.size());
         return validDirections.get(randIndex);
     }
-    private Direction getRandomValidDirection(int seed){
-        List<Direction> validDirections = getValidDirections();
 
-        Random rand = new Random(seed);
-        int randIndex = rand.nextInt(validDirections.size());
-        return validDirections.get(randIndex);
+    public void resetSeed(){
+        seededRand = new Random(SEED);
     }
 
     private List<Direction> getValidDirections(){

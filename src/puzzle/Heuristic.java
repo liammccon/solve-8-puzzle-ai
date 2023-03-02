@@ -20,7 +20,6 @@ public enum Heuristic {
         goalCoordinate.put(6, rowCol(2,0));
         goalCoordinate.put(7, rowCol(2,1));
         goalCoordinate.put(8, rowCol(2,2));
-
     }
 
     record Coordinate(int row, int col){}
