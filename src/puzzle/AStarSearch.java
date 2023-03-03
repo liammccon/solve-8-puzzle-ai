@@ -37,14 +37,15 @@ public class AStarSearch {
                 nodesGenerated++;
                 if (nodesGenerated > maxNodes) throw new IllegalStateException("Exceeded maximum allowed number of generated nodes! (" + nodesGenerated + ")");
 
-                //if (next is not in reached OR next.cost is less than the cost for the equivalent state in reached
+                //if next is not in reached OR next.cost is less than the cost for the equivalent state in reached
                 if (!reachedCost.containsKey(next.state()) || next.cost() < reachedCost.get(next.state())){
                     frontier.add(next);
                     reachedCost.put(next.state(), next.cost());
                 }
             }
         }
-        return null; //Does not run under correct circumstances
+        //If no solution is found. Does not run under normal circumstances
+        return null;
     }
 
     public static Move solveAStar(Puzzle puzzle, Heuristic heuristic, long maxNodes) {
